@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps } from '@ngrx/store';
-import { CounterConsumer } from './index';
+import { CounterConsumer } from './counter.reducer';
 
 export const counterActions = (source: CounterConsumer) =>
   createActionGroup({

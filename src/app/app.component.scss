@@ -1,13 +1,28 @@
-.c-counter {
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background-color: #2563eb;
   padding: 16px;
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  div {
-    display: flex;
-    gap: 20px;
+.nav-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #1d4ed8;
   }
- button {
-   width: 100px;
-   background: antiquewhite;
-   border-radius: 8px;
- }
+}
+
+.nav-route {
+  margin-left: auto;
+  font-size: 14px;
 }

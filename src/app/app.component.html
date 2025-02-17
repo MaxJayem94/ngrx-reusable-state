@@ -1,20 +1,7 @@
-<div class="c-counter">
-  <p>Home</p>
-  <div>
-    <button (click)="this.counterFacade.decrement(CounterConsumer.HOME)">-</button>
-    {{
-          homeCounter$ | async
-    }}
-    <button (click)="this.counterFacade.increment(CounterConsumer.HOME)">+</button>
-  </div>
+<div class="navbar">
+  <button routerLink="" class="nav-button">Home</button>
+  <button routerLink="/products" class="nav-button">Products</button>
+  <button routerLink="/media" class="nav-button">Media</button>
+  <span class="nav-route">Current route: {{ router.url }}</span>
 </div>
-<div class="c-counter">
-  <p>Product</p>
-  <div>
-    <button (click)="this.counterFacade.decrement(CounterConsumer.PRODUCT)">-</button>
-    {{
-          productCounter$ | async
-    }}
-    <button (click)="this.counterFacade.increment(CounterConsumer.PRODUCT)">+</button>
-  </div>
-</div>
+<router-outlet></router-outlet>

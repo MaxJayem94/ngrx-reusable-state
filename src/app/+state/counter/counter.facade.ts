@@ -1,25 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { counterActions } from './counter.actions';
-import { CounterConsumer } from './index';
-import { selectCounter } from './trailers.selectors';
+import {
+  COUNTER_CONSUMER_INJECTION_TOKEN,
+  CounterConsumer,
+} from './counter.reducer';
+import { selectCounter } from './counter.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CounterFacade {
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    @Inject(COUNTER_CONSUMER_INJECTION_TOKEN)
+    public consumer: CounterConsumer,
+  ) {}
 
-  counter$ = (featureKey: CounterConsumer) =>
-    this.store.select(selectCounter(featureKey));
+  actions = counterActions(this.consumer);
 
-  increment(source: CounterConsumer) {
-    const actions = counterActions(source);
-    this.store.dispatch(actions.incrementCounter());
+  counter$ = this.store.select(selectCounter(this.consumer));
+
+  increment() {
+    this.store.dispatch(this.actions.incrementCounter());
   }
 
-  decrement(source: CounterConsumer) {
-    const actions = counterActions(source);
-    this.store.dispatch(actions.decrementCounter());
+  decrement() {
+    this.store.dispatch(this.actions.decrementCounter());
   }
 }

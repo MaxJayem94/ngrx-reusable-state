@@ -1,6 +1,15 @@
+import { InjectionToken } from '@angular/core';
 import { Action, createReducer, on } from '@ngrx/store';
 import { counterActions } from './counter.actions';
-import { CounterConsumer } from './index';
+
+export enum CounterConsumer {
+  HOME = 'home',
+  PRODUCTS = 'products',
+  MEDIA = 'media',
+}
+
+export const COUNTER_CONSUMER_INJECTION_TOKEN =
+  new InjectionToken<CounterConsumer>('Counter Consumer Injection Token');
 
 export interface CounterState {
   counter: number;
@@ -22,14 +31,14 @@ const createCounterReducer = (source: CounterConsumer) => {
     on(actions.decrementCounter, (state) => ({
       ...state,
       counter: state.counter - 1,
-    }))
+    })),
   );
 };
 
 export function counterReducer(
   source: CounterConsumer,
   state: CounterState | undefined,
-  action: Action
+  action: Action,
 ) {
   return createCounterReducer(source)(state, action);
 }

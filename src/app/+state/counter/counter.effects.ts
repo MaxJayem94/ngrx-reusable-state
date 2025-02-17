@@ -1,28 +1,39 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Inject, Injectable } from '@angular/core';
+import {
+  Actions,
+  createEffect,
+  ofType,
+  OnIdentifyEffects,
+} from '@ngrx/effects';
+import { tap } from 'rxjs';
 import { counterActions } from './counter.actions';
-import { CounterConsumer } from './index';
-import { getConsumerFromActionType } from './trailers.helpers';
+import {
+  COUNTER_CONSUMER_INJECTION_TOKEN,
+  CounterConsumer,
+} from './counter.reducer';
 
 @Injectable()
-export class CounterEffects {
-  load$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(
-        ...Object.values(CounterConsumer).map(
-          (source) => counterActions(source).incrementAsyncCounter
-        )
+export class CounterEffects implements OnIdentifyEffects {
+  constructor(
+    private actions$: Actions,
+    @Inject(COUNTER_CONSUMER_INJECTION_TOKEN)
+    private consumer: CounterConsumer,
+  ) {}
+
+  logIncrement$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(counterActions(this.consumer).incrementCounter),
+        tap(() =>
+          console.log('Increment Action from consumer: ', this.consumer),
+        ),
       ),
-      switchMap((action) => {
-        const source = getConsumerFromActionType(action.type);
-        const actions = counterActions(source);
+    {
+      dispatch: false,
+    },
+  );
 
-        return of(actions.incrementAsyncCounterSuccess());
-      })
-    );
-  });
-
-  constructor(private actions$: Actions) {}
+  ngrxOnIdentifyEffects(): CounterConsumer {
+    return this.consumer;
+  }
 }

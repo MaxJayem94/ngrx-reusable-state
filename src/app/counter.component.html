@@ -1,0 +1,8 @@
+<div class="counter-container">
+  <p class="counter-consumer">{{ this.counterFacade.consumer }} counter</p>
+  <div class="counter-controls">
+    <button (click)="this.counterFacade.decrement()" class="counter-button decrement">-</button>
+    <span class="counter-value">{{ counterValue$ | async }}</span>
+    <button (click)="this.counterFacade.increment()" class="counter-button increment">+</button>
+  </div>
+</div>

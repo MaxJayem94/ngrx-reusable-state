@@ -1,20 +1,13 @@
-import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { CounterConsumer } from './+state/counter';
-import { CounterFacade } from './+state/counter/counter.facade';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AsyncPipe],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  homeCounter$ = this.counterFacade.counter$(CounterConsumer.HOME);
-  productCounter$ = this.counterFacade.counter$(CounterConsumer.PRODUCT);
-  protected readonly CounterConsumer = CounterConsumer;
-
-  constructor(public counterFacade: CounterFacade) {}
+  constructor(public router: Router) {}
 }
