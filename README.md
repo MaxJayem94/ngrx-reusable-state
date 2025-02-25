@@ -3,6 +3,8 @@
 This repository demonstrates how to instantiate multiple independent instances of the same NGRX feature using *
 *higher-order functions and Injection Tokens**.
 
+See this [Medium Article](https://medium.com/p/de461c41f28b) for further explanation.
+
 ## Key Features
 
 - **State Isolation**: Each instance of the counter feature maintains its own independent state.
